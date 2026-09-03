@@ -1,28 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fluent 625 — Learn Spanish the Fluent Forever Way</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f13; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; }
-  .logo  { font-size: 64px; margin-bottom: 16px; }
-  h1     { font-size: 36px; font-weight: 800; color: #fff; margin-bottom: 8px; }
-  p      { font-size: 18px; color: #888; margin-bottom: 40px; text-align: center; max-width: 420px; }
-  .links { display: flex; gap: 24px; font-size: 14px; }
-  .links a { color: #5b6af0; text-decoration: none; }
-  .links a:hover { text-decoration: underline; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fluent 625 — Learn a Language That Sticks</title>
+  <meta name="description" content="Fluent 625 helps you build a real vocabulary foundation using spaced repetition and personal images. Available on iOS." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #5b6af0;
+      --primary-dark: #4451d4;
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --card: #22223a;
+      --text: #f0f0f8;
+      --text-secondary: #9090b0;
+      --border: #2e2e4a;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(15, 15, 26, 0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--primary); }
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 100px 24px 80px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(91, 106, 240, 0.15);
+      border: 1px solid rgba(91, 106, 240, 0.3);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin: 0 auto 40px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-secondary {
+      background: var(--card);
+      color: var(--text);
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--primary); transform: translateY(-1px); }
+
+    /* ── Flags strip ── */
+    .flags {
+      text-align: center;
+      padding: 16px 24px 60px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .flags-row { font-size: 2rem; margin-bottom: 10px; letter-spacing: 8px; }
+
+    /* ── Features ── */
+    .section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+    .section-label {
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .section h2 {
+      text-align: center;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 56px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+    .feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ── How it works ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+      counter-reset: step;
+    }
+    .step {
+      text-align: center;
+      counter-increment: step;
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(91, 106, 240, 0.15);
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+    }
+    .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .step p { font-size: 0.9rem; color: var(--text-secondary); }
+
+    /* ── CTA ── */
+    .cta {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 80px 24px;
+    }
+    .cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .cta p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      margin-bottom: 36px;
+    }
+    .coming-soon {
+      display: inline-block;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin: 0 12px;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--text); }
+    .footer-links { margin-bottom: 16px; }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 70px 20px 60px; }
+    }
+  </style>
 </head>
 <body>
-  <div class="logo">🌍</div>
-  <h1>Fluent 625</h1>
-  <p>Learn Spanish vocabulary using the science-backed Fluent Forever method.</p>
-  <div class="links">
-    <a href="/privacy.html">Privacy Policy</a>
-    <a href="/terms.html">Terms of Service</a>
-    <a href="mailto:support@fluent625.app">Support</a>
+
+  <!-- Nav -->
+  <nav>
+    <a class="nav-logo" href="/">Fluent<span>625</span></a>
+    <a class="nav-link" href="mailto:support@fluent625.app">Support</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">Now in Development</div>
+    <h1>Learn a language<br /><span>that actually sticks</span></h1>
+    <p>Fluent 625 uses spaced repetition and your own personal images to build a real vocabulary foundation — the way your brain is wired to remember.</p>
+    <div class="hero-buttons">
+      <span class="coming-soon">📱 Coming Soon to the App Store</span>
+    </div>
+  </section>
+
+  <!-- Flags -->
+  <div class="flags">
+    <div class="flags-row">🇪🇸 🇫🇷 🇩🇪 🇮🇹 🇵🇹 🇮🇳</div>
+    <span>Spanish · French · German · Italian · Portuguese · and more</span>
   </div>
+
+  <!-- Features -->
+  <section class="section">
+    <div class="section-label">Why Fluent 625</div>
+    <h2>Built on how memory works</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>Spaced Repetition</h3>
+        <p>Our SM-2 algorithm shows you each word at the exact moment before you'd forget it — so reviews are never wasted.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🖼️</div>
+        <h3>Personal Images</h3>
+        <p>Attach your own photos to words. Personal associations are the strongest memory anchors — no generic stock photos.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>The 625 Foundation</h3>
+        <p>Start with the 625 most essential words in any language — the proven vocabulary base from the Fluent Forever method.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Track Your Progress</h3>
+        <p>See your streak, session history, and how many words you've mastered — motivation built right in.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Multiple Languages</h3>
+        <p>Enroll in Spanish, French, Tamil, and more — each language tracked independently with its own progress.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👨‍🏫</div>
+        <h3>Tutor Integration</h3>
+        <p>Connect with your language tutor using a referral code so they can track your progress and guide your learning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section" style="padding-top: 0;">
+    <div class="section-label">How It Works</div>
+    <h2>Simple daily sessions</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Pick your language</h3>
+        <p>Choose from our growing list of supported languages and get started in seconds.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Review your cards</h3>
+        <p>Flip through flashcards and rate how well you remembered each word.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Add your images</h3>
+        <p>Personalize words with photos from your camera roll for stronger recall.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Come back tomorrow</h3>
+        <p>The algorithm schedules exactly what you need to review — no guessing required.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready to start learning?</h2>
+    <p>Fluent 625 is coming to the App Store soon.<br />Have a question? We'd love to hear from you.</p>
+    <a class="btn-primary" href="mailto:support@fluent625.app">✉️ Contact Us</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="mailto:support@fluent625.app">support@fluent625.app</a>
+    </div>
+    <div>© 2026 Fluent 625. All rights reserved.</div>
+  </footer>
+
 </body>
 </html>
